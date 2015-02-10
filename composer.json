@@ -14,5 +14,10 @@
         "anahkiasen/rocketeer": "2.0.*@dev",
         "illuminate/support": "4.2.*",
         "maknz/slack": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "netoholic\\RocketeerSlack": "src/netoholic/RocketeerSlack"
+        }
     }
 }
