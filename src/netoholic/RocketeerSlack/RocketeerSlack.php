@@ -22,13 +22,13 @@ class RocketeerSlack extends AbstractNotifier {
   public function register(Container $app) {
     $settings = [
       'username' => $app['config']->get('rocketeer-slack-unofficial::username'),
-      'channel' => $app['config']->get('rocketeer-slack-unifficial::channel'),
+      'channel' => $app['config']->get('rocketeer-slack-unofficial::channel'),
       'link_names' => true,
       'icon' => ':rocket:'
     ];
 
     $app->bind('slack', function ($app) use ($settings) {
-        return new Client($app['config']->get('rocketeer-slack-unifficial::hook-url'), $settings);
+        return new Client($app['config']->get('rocketeer-slack-unofficial::hook-url'), $settings);
       });
 
     return $app;
