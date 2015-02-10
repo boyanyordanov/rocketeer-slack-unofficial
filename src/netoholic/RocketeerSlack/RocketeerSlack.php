@@ -3,25 +3,58 @@
 namespace netoholic\RocketeerSlack;
 
 use Illuminate\Container\Container;
-use Rocketeer\Abstracts\AbstractPlugin;
-use Rocketeer\Services\TasksHandler;
+use Maknz\Slack\Client;
+use Rocketeer\Plugins\AbstractNotifier;
 
-class RocketeerSlack extends AbstractPlugin {
+class RocketeerSlack extends AbstractNotifier {
 
+  /**
+   * Setup the plugin
+   *
+   * @param Container $app
+   */
+  public function __construct(Container $app)
+  {
+    parent::__construct($app);
+    $this->configurationFolder = __DIR__.'/../config';
+  }
 
   public function register(Container $app) {
+    $settings = [
+      'username' => $app['config']->get('rocketeer-slack-unofficial::username'),
+      'channel' => $app['config']->get('rocketeer-slack-unifficial::channel'),
+      'link_names' => true,
+      'icon' => ':rocket:'
+    ];
 
+    $app->bind('slack', function ($app) use ($settings) {
+        return new Client($app['config']->get('rocketeer-slack-unifficial::hook-url'), $settings);
+      });
+
+    return $app;
   }
 
   /**
-   * Register Tasks with Rocketeer
+   * Send a given message
    *
-   * @param \Rocketeer\Services\TasksHandler $queue
+   * @param string $message
    *
    * @return void
    */
-  public function onQueue(TasksHandler $queue)
+  public function send($message)
   {
-    // TODO: Implement onQueue() method.
+    $this->app['slack']->send($message);
+  }
+
+  /**
+   * Get the default message format
+   *
+   * @param string $message The message handle
+   *
+   * @return string
+   */
+  public function getMessageFormat($message)
+  {
+    return $this->app['config']->get('rocketeer-slack-unofficial::' . $message);
   }
 }
