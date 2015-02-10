@@ -1,0 +1,13 @@
+{
+    "name": "netoholic/rocketeer-slack-unofficial",
+    "description": "A simple Slack plugin for Rocketeer",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Boyan Yordanov",
+            "email": "specterbg@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
