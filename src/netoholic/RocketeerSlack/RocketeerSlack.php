@@ -16,19 +16,19 @@ class RocketeerSlack extends AbstractNotifier {
   public function __construct(Container $app)
   {
     parent::__construct($app);
-    $this->configurationFolder = __DIR__.'/../config';
+    $this->configurationFolder = __DIR__.'/../../config';
   }
 
   public function register(Container $app) {
     $settings = [
-      'username' => $app['config']->get('rocketeer-slack-unofficial::username'),
-      'channel' => $app['config']->get('rocketeer-slack-unofficial::channel'),
+      'username' => $app['config']->get('rocketeer-slack-unofficial::config')['url'],
+      'channel' => $app['config']->get('rocketeer-slack-unofficial::config')['channel'],
       'link_names' => true,
       'icon' => ':rocket:'
     ];
 
     $app->bind('slack', function ($app) use ($settings) {
-        return new Client($app['config']->get('rocketeer-slack-unofficial::hook-url'), $settings);
+        return new Client($app['config']->get('rocketeer-slack-unofficial::config')['hook-url'], $settings);
       });
 
     return $app;
@@ -55,6 +55,6 @@ class RocketeerSlack extends AbstractNotifier {
    */
   public function getMessageFormat($message)
   {
-    return $this->app['config']->get('rocketeer-slack-unofficial::' . $message);
+    return $this->app['config']->get('rocketeer-slack-unofficial::config')[$message];
   }
 }
