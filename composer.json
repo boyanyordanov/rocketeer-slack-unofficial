@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "netoholic\\RocketeerSlack": "src/netoholic/RocketeerSlack"
+            "netoholic\\RocketeerSlack\\": "src/netoholic/RocketeerSlack"
         }
     }
 }
